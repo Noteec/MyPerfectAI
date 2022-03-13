@@ -140,6 +140,13 @@ function DCanvas(el)
 		let check = document.querySelector('.check')
 		start = document.querySelector('.startb')
 
+		const config = {
+			binaryThresh: 0.5,
+			hiddenLayers: [3], // array of ints for the sizes of the hidden layers in the network
+			activation: 'sigmoid', // supported activation types: ['sigmoid', 'relu', 'leaky-relu', 'tanh'],
+			leakyReluAlpha: 0.01, // supported for activation type 'leaky-relu'
+		  };
+
             clear.addEventListener('click',() => {
 					d.clear();
 				});
@@ -153,7 +160,7 @@ function DCanvas(el)
 				train_data.push(obj);	
 			})
 			check.addEventListener('click',() => {
-				net = new brain.NeuralNetwork();
+				net = new brain.NeuralNetwork(config);
 				net.train(train_data, { log: true });
 
 				const result = brain.likely(d.calculate(), net);
